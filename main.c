@@ -41,7 +41,7 @@ uint8_t Adafruit_SHT31_crc8(uint8_t *data, int len)
 float Adafruit_SHT31_readTemperature(void) {
     while (! Adafruit_SHT31_readTempHum())
     {
-        CyDelay(1); //was 200
+        CyDelay(200); //was 200
     }
 
     return temp;
@@ -51,7 +51,7 @@ float Adafruit_SHT31_readTemperature(void) {
 float Adafruit_SHT31_readHumidity(void) {
     while (! Adafruit_SHT31_readTempHum())
     {
-        CyDelay(1); //was 200
+        CyDelay(200); //was 200
     }
 
     return humidity;
@@ -63,7 +63,7 @@ int Adafruit_SHT31_readTempHum(void) {
 
     Adafruit_SHT31_writeCommand(SHT31_MEAS_HIGHREP);  //0x2400
   
-    CyDelay(1);  //was 500
+    CyDelay(500);  //was 500
 
     I2C_1_MasterReadBuf(_i2caddr, readbuffer, 6, I2C_1_MODE_COMPLETE_XFER);
 
@@ -108,7 +108,7 @@ int Adafruit_SHT31_writeCommand(uint16_t cmd) {
     
     while (I2C_1_MasterWriteBuf(_i2caddr, wrData, 2, I2C_1_MODE_COMPLETE_XFER))
     {
-        CyDelay(1);  //was 200
+        CyDelay(200);  //was 200
     }
 
     result = true;
@@ -119,7 +119,7 @@ int Adafruit_SHT31_writeCommand(uint16_t cmd) {
 
 void Adafruit_SHT31_reset(void) {
   Adafruit_SHT31_writeCommand(SHT31_SOFTRESET);   //0x30A2
-  CyDelay(1);  //was 10
+  CyDelay(10);  //was 10
 }
 
 
@@ -152,7 +152,7 @@ int main()
         t = Adafruit_SHT31_readTemperature();
 //        h = Adafruit_SHT31_readHumidity();
 
-        sprintf( str, "Temp: %3dF ", (int) ((t * 5.0/9) + 32.5) );
+        sprintf( str, "Temp: %3dF ", (int) ((t * 9/5) + 32.5) );
         
         for (i = 0; i < dots; ++i)
             strcat( str, "." );
